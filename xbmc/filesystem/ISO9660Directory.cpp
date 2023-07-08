@@ -10,6 +10,9 @@
 
 #include "FileItem.h"
 #include "URL.h"
+#if defined(HAS_DVD_DRIVE)
+#include "storage/cdioSupport.h"
+#endif
 #include "utils/URIUtils.h"
 
 #include <cdio++/iso9660.hpp>
@@ -34,7 +37,16 @@ bool CISO9660Directory::GetDirectory(const CURL& url, CFileItemList& items)
 
   std::unique_ptr<ISO9660::IFS> iso(new ISO9660::IFS);
 
-  if (!iso->open(url2.GetHostName().c_str()))
+  std::string iso_file = url2.GetHostName();
+#if defined(HAS_DVD_DRIVE)
+  if (iso_file.empty())
+  {
+    std::shared_ptr<MEDIA_DETECT::CLibcdio> c_cdio = MEDIA_DETECT::CLibcdio::GetInstance();
+    iso_file = c_cdio->GetDeviceFileName();
+  }
+#endif
+
+  if (!iso->open(iso_file.c_str()))
     return false;
 
   std::vector<ISO9660::Stat*> isoFiles;
