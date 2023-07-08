@@ -284,12 +284,8 @@ void CURL::Parse(const std::string& strURL1)
       m_strFileName = strURL.substr(iPos, iEnd - iPos);
   }
 
-  // iso9960 doesnt have an hostname;-)
-  if (IsProtocol("iso9660")
-   || IsProtocol("musicdb")
-   || IsProtocol("videodb")
-   || IsProtocol("sources")
-   || IsProtocol("pvr"))
+  if (IsProtocol("iso9660") || IsProtocol("musicdb") || IsProtocol("videodb") ||
+      IsProtocol("sources") || IsProtocol("pvr"))
   {
     if (m_strHostName != "" && m_strFileName != "")
     {
