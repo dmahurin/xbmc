@@ -231,7 +231,7 @@ void CDetectDVDMedia::DetectMediaType()
   // Detect ISO9660(mode1/mode2), CDDA filesystem or UDF
   if (m_pCdInfo->IsISOHFS(1) || m_pCdInfo->IsIso9660(1) || m_pCdInfo->IsIso9660Interactive(1))
   {
-    strNewUrl = "iso9660://";
+    strNewUrl = "iso9660://" + CServiceBroker::GetMediaManager().TranslateDevicePath(m_diskPath);
   }
   else
   {

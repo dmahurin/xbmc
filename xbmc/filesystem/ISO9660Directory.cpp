@@ -34,7 +34,14 @@ bool CISO9660Directory::GetDirectory(const CURL& url, CFileItemList& items)
 
   std::unique_ptr<ISO9660::IFS> iso(new ISO9660::IFS);
 
-  if (!iso->open(url2.GetHostName().c_str()))
+  std::string iso_file = url2.GetHostName();
+  if (iso_file.empty())
+  {
+    iso_file = "/" + url2.GetFileName();
+    strSub = "/";
+  }
+
+  if (!iso->open(iso_file.c_str()))
     return false;
 
   std::vector<ISO9660::Stat*> isoFiles;

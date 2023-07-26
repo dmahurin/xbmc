@@ -193,7 +193,7 @@ bool CAutorun::RunDisc(IDirectory* pDir, const std::string& strDrive, int& nAdde
           std::string path = URIUtils::AddFileToFolder(pItem->GetPath(), "VIDEO_TS.IFO");
           if (!CFileUtils::Exists(path))
             path = URIUtils::AddFileToFolder(pItem->GetPath(), "video_ts.ifo");
-          CFileItemPtr item(new CFileItem(path, false));
+          CFileItemPtr item(new CFileItem(strDrive, false));
           item->SetLabel(CServiceBroker::GetMediaManager().GetDiskLabel(strDrive));
           item->GetVideoInfoTag()->m_strFileNameAndPath =
               CServiceBroker::GetMediaManager().GetDiskUniqueId(strDrive);
